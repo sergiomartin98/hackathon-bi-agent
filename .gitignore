@@ -222,6 +222,7 @@ __marimo__/
 # Variables de entorno y credenciales (OBLIGATORIO)
 .env
 .env.*
+!.env.example
 *.pem
 *.key
 

@@ -8,20 +8,25 @@ from tools.db_tool import (
     get_customer_top_products,
     get_customer_monthly_history
 )
+from tools.pdf_tool import HTMLToPDFExporter
+from generator_dashboard import generate_html_dashboard
 
 
 class BIAgentCustomerRetention:
     """
     Agente de Inteligencia de Negocios (BI) especializado en Retail.
-    Skill principal:
-    - Analizar la totalidad del histórico transaccional en PostgreSQL (Supabase).
-    - Detectar pérdida de actividad (inactividad/fuga) en clientes valiosos (Top Spenders / Frecuencia).
-    - Seleccionar a los 5 clientes más valiosos en situación de riesgo de churn.
-    - Proponer 3 acciones tácticas concretas y personalizadas para reactivar a cada cliente.
+    
+    Habilidades (Skills):
+    - Skill 1: Analizar la base de datos completa en PostgreSQL (Supabase), detectar pérdida 
+               de actividad en clientes VIP, seleccionar los Top 5 en riesgo de churn,
+               formular 3 acciones tácticas por cliente y generar un Dashboard interactivo HTML.
+    - Skill 2: Generar e imprimir un documento PDF ejecutivo a partir del reporte HTML generado,
+               asegurando alta resolución gráfica y guardándolo en la carpeta del proyecto.
     """
 
     def __init__(self, inactivity_threshold_days=60):
         self.inactivity_threshold_days = inactivity_threshold_days
+        self.pdf_exporter = HTMLToPDFExporter()
 
     def run_analysis(self):
         print("[AGENTE BI] Iniciando análisis analítico de clientes en Supabase...")
@@ -215,6 +220,42 @@ class BIAgentCustomerRetention:
             ]
 
         return diagnostic, actions
+
+    def generate_pdf_report(self, html_path, output_pdf_path=None):
+        """
+        Skill 2:
+        Genera un documento PDF ejecutivo a partir del reporte HTML generado.
+        Guarda el archivo .pdf resultante en la carpeta del proyecto.
+        """
+        print(f"[AGENTE BI - SKILL 2] Iniciando impresión y renderizado PDF desde: {html_path}...")
+        result = self.pdf_exporter.convert(html_path, output_pdf_path)
+        print(f"[AGENTE BI - SKILL 2] PDF generado exitosamente en: {result['pdf_path']} ({result['size_mb']} MB)")
+        return result
+
+    def execute_all_skills(self, output_dir=None):
+        """
+        Ejecuta el ciclo completo de habilidades del agente:
+        1. Skill 1: Analítica de Churn VIP + Generación de Dashboard HTML
+        2. Skill 2: Exportación e Impresión del Reporte en Formato PDF
+        """
+        base_dir = Path(output_dir) if output_dir else Path(__file__).resolve().parent / "outputs"
+        base_dir.mkdir(parents=True, exist_ok=True)
+
+        # 1. Ejecución Skill 1
+        analysis_data = self.run_analysis()
+        html_file = base_dir / "dashboard_clientes_vip.html"
+        generate_html_dashboard(analysis_data, html_file)
+
+        # 2. Ejecución Skill 2
+        pdf_file = base_dir / "reporte_clientes_vip.pdf"
+        pdf_result = self.generate_pdf_report(html_file, pdf_file)
+
+        return {
+            "analysis_data": analysis_data,
+            "html_path": str(html_file.resolve()),
+            "pdf_path": pdf_result["pdf_path"],
+            "pdf_size_mb": pdf_result["size_mb"]
+        }
 
 
 if __name__ == "__main__":

@@ -10,7 +10,15 @@ load_dotenv(dotenv_path=env_path)
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
-    raise ValueError(f"DATABASE_URL no encontrada en {env_path}")
+    raise ValueError(
+        f"\n[ERROR DE CONFIGURACIÓN] No se encontró DATABASE_URL en {env_path}.\n"
+        "Por favor copia '.env.example' como '.env' e introduce tu contraseña de Supabase."
+    )
+if "TU_PASSWORD_AQUI" in DATABASE_URL:
+    raise ValueError(
+        "\n[ERROR DE AUTENTICACIÓN] Debes colocar tu contraseña real de Supabase en el archivo .env "
+        "(reemplazando 'TU_PASSWORD_AQUI')."
+    )
 
 engine = create_engine(DATABASE_URL)
 

@@ -47,14 +47,27 @@ def main():
         for a_idx, act in enumerate(vip["actions"], 1):
             print(f"      {a_idx}) {act['title']} [{act['urgency']}]")
 
-    # 3. Generar Frontend / Dashboard HTML
+    # 3. SKILL 1: Generar Frontend / Dashboard HTML
+    print("\n" + "=" * 70)
+    print("🎨 [SKILL 1] GENERANDO DASHBOARD INTERACTIVO (HTML)...")
+    print("=" * 70)
     output_html = current_dir / "outputs" / "dashboard_clientes_vip.html"
     generate_html_dashboard(results, output_html)
 
+    # 4. SKILL 2: Generar e Imprimir Documento PDF del Reporte
     print("\n" + "=" * 70)
-    print(f"✅ PROCESO COMPLETADO EXITOSAMENTE")
-    print(f"🌐 Abre el Dashboard HTML en tu navegador:")
+    print("📄 [SKILL 2] GENERANDO DOCUMENTO PDF DEL REPORTE EJECUTIVO...")
+    print("=" * 70)
+    output_pdf = current_dir / "outputs" / "reporte_clientes_vip.pdf"
+    pdf_res = agent.generate_pdf_report(output_html, output_pdf)
+
+    print("\n" + "=" * 70)
+    print("✅ CICLO DE HABILIDADES COMPLETADO EXITOSAMENTE")
+    print("=" * 70)
+    print(f"🌐 [Skill 1] Dashboard HTML:")
     print(f"   file:///{output_html.resolve()}")
+    print(f"📑 [Skill 2] Documento PDF generado:")
+    print(f"   file:///{output_pdf.resolve()} ({pdf_res['size_mb']} MB)")
     print("=" * 70)
 
 

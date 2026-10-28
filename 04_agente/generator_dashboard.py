@@ -67,7 +67,7 @@ def generate_html_dashboard(data, output_path):
             """
 
         vip_cards_html += f"""
-        <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-8 hover:shadow-lg transition-shadow">
+        <div class="vip-card-block bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-8 hover:shadow-lg transition-shadow">
             <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 mb-5">
                 <div class="flex items-center gap-3">
                     <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">
@@ -167,6 +167,28 @@ def generate_html_dashboard(data, output_path):
     <style>
         body {{
             font-family: 'Plus Jakarta Sans', sans-serif;
+        }}
+        @media print {{
+            body {{
+                background-color: #ffffff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }}
+            .no-print {{
+                display: none !important;
+            }}
+            .vip-card-block {{
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+                margin-bottom: 2rem !important;
+            }}
+            .chart-block {{
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+            }}
+            header {{
+                position: static !important;
+            }}
         }}
     </style>
 </head>
