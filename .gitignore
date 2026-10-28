@@ -218,3 +218,26 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Variables de entorno y credenciales (OBLIGATORIO)
+.env
+.env.*
+*.pem
+*.key
+
+# Entornos virtuales
+venv/
+.venv/
+env/
+
+# Archivos de datos pesados
+*.csv
+*.xlsx
+*.db
+*.sqlite
+*.sqlite3
+
+# Caché y logs
+__pycache__/
+*.log
+.DS_Store
