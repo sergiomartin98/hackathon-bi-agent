@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BI Retail Agent - Retención de Clientes VIP</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center font-black text-xl shadow-inner">
+                    🤖
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight">BI Retail Intelligence Agent</h1>
+                    <p class="text-xs text-slate-400">Sistema de Detección de Fuga y Plan de Reactivación VIP</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    PostgreSQL Supabase Conectado
+                </span>
+                <span class="text-slate-400 hidden sm:inline">&bull;</span>
+                <span class="text-slate-300 font-medium">Dataset: <strong>Online Retail II</strong></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Header Hero & Context -->
+        <div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200 mb-8">
+            <div class="max-w-3xl">
+                <span class="text-xs uppercase font-extrabold tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
+                    Skill Ejecutada: Análisis de Attrition y Reactivación Prescriptiva
+                </span>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mt-3 leading-tight">
+                    Detección de Pérdida de Actividad en los 5 Clientes Más Valiosos
+                </h2>
+                <p class="text-slate-600 text-sm md:text-base mt-2 leading-relaxed">
+                    El agente analizó la totalidad de los <strong>407,664 registros</strong> en Supabase, calculó métricas de Recencia, Frecuencia y Valor Monetario (RFM) e identificó a los clientes líderes en facturación y pedidos que presentan una cesación prolongada de compras.
+                </p>
+            </div>
+
+            <!-- KPIs Principales -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8 pt-6 border-t border-slate-200">
+                <div class="bg-gradient-to-br from-rose-50 to-rose-100/50 p-4 rounded-2xl border border-rose-200">
+                    <span class="text-xs font-bold text-rose-600 uppercase tracking-wider block">Facturación VIP en Riesgo</span>
+                    <span class="text-2xl lg:text-3xl font-black text-rose-700 mt-1 block">£128,747.75</span>
+                    <span class="text-xs text-rose-600/80 mt-1 block font-medium">Suma de los 5 VIPs inactivos</span>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Clientes Totales Evaluados</span>
+                    <span class="text-2xl lg:text-3xl font-black text-slate-800 mt-1 block">4,312</span>
+                    <span class="text-xs text-slate-500 mt-1 block font-medium">19,213 órdenes globales</span>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Facturación Global</span>
+                    <span class="text-2xl lg:text-3xl font-black text-slate-800 mt-1 block">£8,832,003.26</span>
+                    <span class="text-xs text-slate-500 mt-1 block font-medium">2009-12-01 a 2010-12-09</span>
+                </div>
+                <div class="bg-indigo-50 p-4 rounded-2xl border border-indigo-200">
+                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider block">Acciones Tácticas Generadas</span>
+                    <span class="text-2xl lg:text-3xl font-black text-indigo-700 mt-1 block">15</span>
+                    <span class="text-xs text-indigo-600/80 mt-1 block font-medium">3 por cada cliente VIP</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Gráfico 1: Segmentación de Clientes -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-base font-bold text-slate-800">Distribución de la Base de Clientes</h3>
+                        <p class="text-xs text-slate-500">Segmentación por días de inactividad respecto al último corte</p>
+                    </div>
+                </div>
+                <div class="relative h-64">
+                    <canvas id="segmentChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Gráfico 2: Top 5 VIPs en Riesgo -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-base font-bold text-slate-800">Top 5 VIPs: Gasto Acumulado vs Días Inactivos</h3>
+                        <p class="text-xs text-slate-500">Magnitud del impacto financiero y tiempo transcurrido sin compras</p>
+                    </div>
+                </div>
+                <div class="relative h-64">
+                    <canvas id="vipChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deep Dive: Top 5 Clientes y sus 3 Acciones -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between mb-5">
+                <div>
+                    <h3 class="text-xl font-black text-slate-900">Detalle de los 5 Clientes Más Valiosos con Pérdida de Actividad</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Diagnóstico analítico particular y plan de acción de 3 pasos por cliente</p>
+                </div>
+                <span class="text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1.5 rounded-xl">
+                    Umbral de Inactividad: &gt; 60 días
+                </span>
+            </div>
+
+            
+        <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-8 hover:shadow-lg transition-shadow">
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 mb-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                        #1
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-xl font-bold text-slate-900">Cliente VIP #13902</h3>
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                                🌍 Denmark
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-0.5">
+                            Cliente desde 2009-12-15 &bull; Última compra: <strong class="text-rose-600">2010-03-17</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="bg-rose-50 border border-rose-200 rounded-xl px-4 py-2 text-right">
+                        <span class="text-xs text-rose-600 uppercase font-bold tracking-wider block">Inactividad</span>
+                        <span class="text-lg font-black text-rose-700">267 días</span>
+                    </div>
+                    <div class="bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-2 text-right">
+                        <span class="text-xs text-indigo-600 uppercase font-bold tracking-wider block">Gasto Total</span>
+                        <span class="text-lg font-black text-indigo-900">£34,095.26</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Métricas rápidas del cliente -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5 text-center">
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Total Pedidos</span>
+                    <span class="text-base font-bold text-slate-800">5</span>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Unidades Compradas</span>
+                    <span class="text-base font-bold text-slate-800">220,600</span>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Ticket Promedio</span>
+                    <span class="text-base font-bold text-slate-800">£6,819.05</span>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Estado del Cliente</span>
+                    <span class="text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded-full inline-block mt-0.5">Riesgo Alto Churn</span>
+                </div>
+            </div>
+
+            <!-- Diagnóstico de pérdida de actividad -->
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl mb-5">
+                <div class="flex items-start gap-2">
+                    <span class="text-amber-600 font-bold text-base">⚠️</span>
+                    <div>
+                        <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wider">Diagnóstico de Pérdida de Actividad</h4>
+                        <p class="text-xs text-amber-800 mt-0.5 leading-relaxed">Cliente mayorista internacional estratégico en Denmark. Acumula £34,095.26 en 5 pedidos con una inactividad crítica de 267 días. El cese abrupto en compras de gran volumen sugiere un probable cuello de botella logístico/aduanero o cambio de proveedor regional de distribución.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Productos preferidos -->
+            <div class="mb-5 bg-slate-50/60 p-4 rounded-xl border border-slate-200">
+                <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <span>⭐</span> Artículos Clave con Mayor Aporte de Facturación
+                </h4>
+                <div class="space-y-1">
+                    
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                <span class="text-slate-700 font-medium truncate max-w-xs" title="SMALL FAIRY CAKE FRIDGE MAGNETS">
+                    📦 SMALL FAIRY CAKE FRIDGE MAGNETS
+                </span>
+                <span class="text-slate-500 font-semibold whitespace-nowrap">
+                    11,960 unids &bull; £6,467.60
+                </span>
+            </div>
+            
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                <span class="text-slate-700 font-medium truncate max-w-xs" title="BLACK AND WHITE PAISLEY FLOWER MUG">
+                    📦 BLACK AND WHITE PAISLEY FLOWER MUG
+                </span>
+                <span class="text-slate-500 font-semibold whitespace-nowrap">
+                    25,164 unids &bull; £2,516.40
+                </span>
+            </div>
+            
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                <span class="text-slate-700 font-medium truncate max-w-xs" title="SET/6 WOODLAND PAPER PLATES">
+                    📦 SET/6 WOODLAND PAPER PLATES
+                </span>
+                <span class="text-slate-500 font-semibold whitespace-nowrap">
+                    12,960 unids &bull; £1,296.00
+                </span>
+            </div>
+            
+                </div>
+            </div>
+
+            <!-- 3 Acciones Tácticas -->
+            <div>
+                <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+                    Plan Estratégico Prescriptivo (3 Acciones de Ataque y Reactivación)
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-400 transition-all shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h5 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">1</span>
+                        1. Auditoría Logística y Tarifa Plana de Envíos B2B
+                    </h5>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold border bg-amber-100 text-amber-800 border-amber-200">
+                        ⏱ Inmediata (Próximos 5 días)
+                    </span>
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-2">
+                    🎯 Canal sugerido: <span class="text-slate-700 font-normal">Videollamada con Key Account Manager Internacional</span>
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Contactar al equipo de compras en Denmark para revisar condiciones de entrega y flete marítimo/terrestre. Ofrecer bonificación del 100% en gastos de envío para órdenes superiores a £5,000 en su línea principal (SMALL FAIRY CAKE FRIDGE MAGNETS).
+                </p>
+                <div class="bg-white rounded-lg p-2.5 border border-slate-200 text-xs text-emerald-800 flex items-start gap-1.5">
+                    <span class="font-bold text-emerald-600">📈 Impacto:</span>
+                    <span>Recuperar el canal de aprovisionamiento internacional y destrabar pedidos frenados por costes logísticos.</span>
+                </div>
+            </div>
+            
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-400 transition-all shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h5 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">2</span>
+                        2. Acuerdo de Rappel y Reserva de Stock Anticipada
+                    </h5>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold border bg-blue-100 text-blue-800 border-blue-200">
+                        ⏱ Medio plazo (10-15 días)
+                    </span>
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-2">
+                    🎯 Canal sugerido: <span class="text-slate-700 font-normal">Propuesta Comercial Formal / Contrato B2B</span>
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Presentar un esquema de rappel por volumen con escalado del 8% al 12% de descuento adicional, garantizando inventario reservado en almacén central para sus categorías clave.
+                </p>
+                <div class="bg-white rounded-lg p-2.5 border border-slate-200 text-xs text-emerald-800 flex items-start gap-1.5">
+                    <span class="font-bold text-emerald-600">📈 Impacto:</span>
+                    <span>Fidelización contractual de largo plazo y previsibilidad de inventario.</span>
+                </div>
+            </div>
+            
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-400 transition-all shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h5 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">3</span>
+                        3. Catálogo Exclusivo Nórdico y Muestrario Físico de Nuevas Líneas
+                    </h5>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold border bg-blue-100 text-blue-800 border-blue-200">
+                        ⏱ Corto plazo (7 días)
+                    </span>
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-2">
+                    🎯 Canal sugerido: <span class="text-slate-700 font-normal">Envío de Muestras Courier Premium + Reunión Ejecutiva</span>
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Despachar un kit de muestras físicas de las colecciones de temporada que complementan su histórico de compra (SMALL FAIRY CAKE FRIDGE MAGNETS), con línea de crédito comercial ampliada a 60 días.
+                </p>
+                <div class="bg-white rounded-lg p-2.5 border border-slate-200 text-xs text-emerald-800 flex items-start gap-1.5">
+                    <span class="font-bold text-emerald-600">📈 Impacto:</span>
+                    <span>Reactivar la demanda de nuevos productos e incrementar el ticket promedio histórico (£{avg_ticket:,.2f}).</span>
+                </div>
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-8 hover:shadow-lg transition-shadow">
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 mb-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                        #2
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-xl font-bold text-slate-900">Cliente VIP #17940</h3>
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                                🌍 United Kingdom
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-0.5">
+                            Cliente desde 2009-12-03 &bull; Última compra: <strong class="text-rose-600">2010-09-20</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="bg-rose-50 border border-rose-200 rounded-xl px-4 py-2 text-right">
+                        <span class="text-xs text-rose-600 uppercase font-bold tracking-wider block">Inactividad</span>
+                        <span class="text-lg font-black text-rose-700">80 días</span>
+                    </div>
+                    <div class="bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-2 text-right">
+                        <span class="text-xs text-indigo-600 uppercase font-bold tracking-wider block">Gasto Total</span>
+                        <span class="text-lg font-black text-indigo-900">£26,286.75</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Métricas rápidas del cliente -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5 text-center">
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Total Pedidos</span>
+                    <span class="text-base font-bold text-slate-800">6</span>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Unidades Compradas</span>
+                    <span class="text-base font-bold text-slate-800">75,825</span>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Ticket Promedio</span>
+                    <span class="text-base font-bold text-slate-800">£4,381.13</span>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Estado del Cliente</span>
+                    <span class="text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded-full inline-block mt-0.5">Riesgo Alto Churn</span>
+                </div>
+            </div>
+
+            <!-- Diagnóstico de pérdida de actividad -->
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl mb-5">
+                <div class="flex items-start gap-2">
+                    <span class="text-amber-600 font-bold text-base">⚠️</span>
+                    <div>
+                        <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wider">Diagnóstico de Pérdida de Actividad</h4>
+                        <p class="text-xs text-amber-800 mt-0.5 leading-relaxed">Cliente mayorista nacional (UK) con alto poder adquisitivo: £26,286.75 acumulados y ticket promedio de £4,381.13. Inactivo desde hace 80 días (última compra en septiembre de 2010), perdiendo el ciclo comercial de otoño/Navidad. Su patrón indica compras por campañas estacionales que no han sido oportunamente estimuladas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Productos preferidos -->
+            <div class="mb-5 bg-slate-50/60 p-4 rounded-xl border border-slate-200">
+                <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <span>⭐</span> Artículos Clave con Mayor Aporte de Facturación
+                </h4>
+                <div class="space-y-1">
+                    
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                <span class="text-slate-700 font-medium truncate max-w-xs" title="PACK OF 12 SUKI TISSUES ">
+                    📦 PACK OF 12 SUKI TISSUES 
+                </span>
+                <span class="text-slate-500 font-semibold whitespace-nowrap">
+                    15,800 unids &bull; £5,400.00
+                </span>
+            </div>
+            
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                <span class="text-slate-700 font-medium truncate max-w-xs" title="PACK OF 12 PINK PAISLEY TISSUES ">
+                    📦 PACK OF 12 PINK PAISLEY TISSUES 
+                </span>
+                <span class="text-slate-500 font-semibold whitespace-nowrap">
+                    15,008 unids &bull; £4,002.00
+                </span>
+            </div>
+            
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                <span class="text-slate-700 font-medium truncate max-w-xs" title="HAND WARMER RED POLKA DOT">
+                    📦 HAND WARMER RED POLKA DOT
+                </span>
+                <span class="text-slate-500 font-semibold whitespace-nowrap">
+                    2,004 unids &bull; £3,707.40
+                </span>
+            </div>
+            
+                </div>
+            </div>
+
+            <!-- 3 Acciones Tácticas -->
+            <div>
+                <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+                    Plan Estratégico Prescriptivo (3 Acciones de Ataque y Reactivación)
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-400 transition-all shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h5 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">1</span>
+                        1. Oferta de Reabastecimiento Estacional con Descuento por Volumen
+                    </h5>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold border bg-amber-100 text-amber-800 border-amber-200">
+                        ⏱ Inmediata (3-5 días)
+                    </span>
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-2">
+                    🎯 Canal sugerido: <span class="text-slate-700 font-normal">Reunión Comercial Presencial / Llamada de KAM</span>
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Presentar una propuesta de reposición con precio especial en 'PACK OF 12 SUKI TISSUES ' y lotes afines, aplicando un 10% de descuento directo al alcanzar un pedido mínimo de £3,000.
+                </p>
+                <div class="bg-white rounded-lg p-2.5 border border-slate-200 text-xs text-emerald-800 flex items-start gap-1.5">
+                    <span class="font-bold text-emerald-600">📈 Impacto:</span>
+                    <span>Reincorporar al cliente en la campaña estacional inmediata recuperando más de £5,000 en compras.</span>
+                </div>
+            </div>
+            
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-400 transition-all shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h5 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">2</span>
+                        2. Pre-venta Exclusiva de Novedades y Reserva Garantizada
+                    </h5>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold border bg-blue-100 text-blue-800 border-blue-200">
+                        ⏱ Corto plazo (7 días)
+                    </span>
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-2">
+                    🎯 Canal sugerido: <span class="text-slate-700 font-normal">Catálogo Digital Interactivo con Pre-reserva</span>
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Brindar acceso anticipado de 72 horas al catálogo de nuevas colecciones antes de su lanzamiento al público general, asegurando disponibilidad completa de stock.
+                </p>
+                <div class="bg-white rounded-lg p-2.5 border border-slate-200 text-xs text-emerald-800 flex items-start gap-1.5">
+                    <span class="font-bold text-emerald-600">📈 Impacto:</span>
+                    <span>Aumentar la percepción de exclusividad de marca e impulsar compras anticipadas.</span>
+                </div>
+            </div>
+            
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-400 transition-all shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h5 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">3</span>
+                        3. Flexibilización de Condiciones de Pago y Descuento por Pronto Pago
+                    </h5>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold border bg-blue-100 text-blue-800 border-blue-200">
+                        ⏱ Medio plazo (10-15 días)
+                    </span>
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-2">
+                    🎯 Canal sugerido: <span class="text-slate-700 font-normal">Finanzas Comerciales / Facturación B2B</span>
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Ofrecer ampliación de plazos a 30/60 días fecha factura o un 3% de descuento adicional por pago al contado dentro de los 10 días.
+                </p>
+                <div class="bg-white rounded-lg p-2.5 border border-slate-200 text-xs text-emerald-800 flex items-start gap-1.5">
+                    <span class="font-bold text-emerald-600">📈 Impacto:</span>
+                    <span>Facilitar el flujo de caja del cliente y eliminar barreras financieras para emitir órdenes de gran importe.</span>
+                </div>
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-8 hover:shadow-lg transition-shadow">
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 mb-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                        #3
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-xl font-bold text-slate-900">Cliente VIP #12482</h3>
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                                🌍 Sweden
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-0.5">
+                            Cliente desde 2010-02-24 &bull; Última compra: <strong class="text-rose-600">2010-05-12</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="bg-rose-50 border border-rose-200 rounded-xl px-4 py-2 text-right">
+                        <span class="text-xs text-rose-600 uppercase font-bold tracking-wider block">Inactividad</span>
+                        <span class="text-lg font-black text-rose-700">211 días</span>
+                    </div>
+                    <div class="bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-2 text-right">
+                        <span class="text-xs text-indigo-600 uppercase font-bold tracking-wider block">Gasto Total</span>
+                        <span class="text-lg font-black text-indigo-900">£23,691.40</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Métricas rápidas del cliente -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5 text-center">
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Total Pedidos</span>
+                    <span class="text-base font-bold text-slate-800">29</span>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Unidades Compradas</span>
+                    <span class="text-base font-bold text-slate-800">27,042</span>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Ticket Promedio</span>
+                    <span class="text-base font-bold text-slate-800">£816.94</span>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Estado del Cliente</span>
+                    <span class="text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded-full inline-block mt-0.5">Riesgo Alto Churn</span>
+                </div>
+            </div>
+
+            <!-- Diagnóstico de pérdida de actividad -->
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl mb-5">
+                <div class="flex items-start gap-2">
+                    <span class="text-amber-600 font-bold text-base">⚠️</span>
+                    <div>
+                        <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wider">Diagnóstico de Pérdida de Actividad</h4>
+                        <p class="text-xs text-amber-800 mt-0.5 leading-relaxed">Cliente mayorista internacional estratégico en Sweden. Acumula £23,691.40 en 29 pedidos con una inactividad crítica de 211 días. El cese abrupto en compras de gran volumen sugiere un probable cuello de botella logístico/aduanero o cambio de proveedor regional de distribución.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Productos preferidos -->
+            <div class="mb-5 bg-slate-50/60 p-4 rounded-xl border border-slate-200">
+                <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <span>⭐</span> Artículos Clave con Mayor Aporte de Facturación
+                </h4>
+                <div class="space-y-1">
+                    
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                <span class="text-slate-700 font-medium truncate max-w-xs" title="LUNCH BAG SUKI  DESIGN ">
+                    📦 LUNCH BAG SUKI  DESIGN 
+                </span>
+                <span class="text-slate-500 font-semibold whitespace-nowrap">
+                    1,300 unids &bull; £1,885.00
+                </span>
+            </div>
+            
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                <span class="text-slate-700 font-medium truncate max-w-xs" title="Manual">
+                    📦 Manual
+                </span>
+                <span class="text-slate-500 font-semibold whitespace-nowrap">
+                    2 unids &bull; £1,749.68
+                </span>
+            </div>
+            
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                <span class="text-slate-700 font-medium truncate max-w-xs" title="SAVE THE PLANET COTTON TOTE BAG">
+                    📦 SAVE THE PLANET COTTON TOTE BAG
+                </span>
+                <span class="text-slate-500 font-semibold whitespace-nowrap">
+                    600 unids &bull; £1,050.00
+                </span>
+            </div>
+            
+                </div>
+            </div>
+
+            <!-- 3 Acciones Tácticas -->
+            <div>
+                <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+                    Plan Estratégico Prescriptivo (3 Acciones de Ataque y Reactivación)
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-400 transition-all shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h5 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">1</span>
+                        1. Auditoría Logística y Tarifa Plana de Envíos B2B
+                    </h5>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold border bg-amber-100 text-amber-800 border-amber-200">
+                        ⏱ Inmediata (Próximos 5 días)
+                    </span>
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-2">
+                    🎯 Canal sugerido: <span class="text-slate-700 font-normal">Videollamada con Key Account Manager Internacional</span>
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Contactar al equipo de compras en Sweden para revisar condiciones de entrega y flete marítimo/terrestre. Ofrecer bonificación del 100% en gastos de envío para órdenes superiores a £5,000 en su línea principal (LUNCH BAG SUKI  DESIGN ).
+                </p>
+                <div class="bg-white rounded-lg p-2.5 border border-slate-200 text-xs text-emerald-800 flex items-start gap-1.5">
+                    <span class="font-bold text-emerald-600">📈 Impacto:</span>
+                    <span>Recuperar el canal de aprovisionamiento internacional y destrabar pedidos frenados por costes logísticos.</span>
+                </div>
+            </div>
+            
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-400 transition-all shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h5 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">2</span>
+                        2. Acuerdo de Rappel y Reserva de Stock Anticipada
+                    </h5>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold border bg-blue-100 text-blue-800 border-blue-200">
+                        ⏱ Medio plazo (10-15 días)
+                    </span>
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-2">
+                    🎯 Canal sugerido: <span class="text-slate-700 font-normal">Propuesta Comercial Formal / Contrato B2B</span>
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Presentar un esquema de rappel por volumen con escalado del 8% al 12% de descuento adicional, garantizando inventario reservado en almacén central para sus categorías clave.
+                </p>
+                <div class="bg-white rounded-lg p-2.5 border border-slate-200 text-xs text-emerald-800 flex items-start gap-1.5">
+                    <span class="font-bold text-emerald-600">📈 Impacto:</span>
+                    <span>Fidelización contractual de largo plazo y previsibilidad de inventario.</span>
+                </div>
+            </div>
+            
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-400 transition-all shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h5 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">3</span>
+                        3. Catálogo Exclusivo Nórdico y Muestrario Físico de Nuevas Líneas
+                    </h5>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold border bg-blue-100 text-blue-800 border-blue-200">
+                        ⏱ Corto plazo (7 días)
+                    </span>
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-2">
+                    🎯 Canal sugerido: <span class="text-slate-700 font-normal">Envío de Muestras Courier Premium + Reunión Ejecutiva</span>
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Despachar un kit de muestras físicas de las colecciones de temporada que complementan su histórico de compra (LUNCH BAG SUKI  DESIGN ), con línea de crédito comercial ampliada a 60 días.
+                </p>
+                <div class="bg-white rounded-lg p-2.5 border border-slate-200 text-xs text-emerald-800 flex items-start gap-1.5">
+                    <span class="font-bold text-emerald-600">📈 Impacto:</span>
+                    <span>Reactivar la demanda de nuevos productos e incrementar el ticket promedio histórico (£{avg_ticket:,.2f}).</span>
+                </div>
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-8 hover:shadow-lg transition-shadow">
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 mb-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                        #4
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-xl font-bold text-slate-900">Cliente VIP #14063</h3>
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                                🌍 United Kingdom
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-0.5">
+                            Cliente desde 2009-12-08 &bull; Última compra: <strong class="text-rose-600">2010-09-27</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="bg-rose-50 border border-rose-200 rounded-xl px-4 py-2 text-right">
+                        <span class="text-xs text-rose-600 uppercase font-bold tracking-wider block">Inactividad</span>
+                        <span class="text-lg font-black text-rose-700">73 días</span>
+                    </div>
+                    <div class="bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-2 text-right">
+                        <span class="text-xs text-indigo-600 uppercase font-bold tracking-wider block">Gasto Total</span>
+                        <span class="text-lg font-black text-indigo-900">£22,710.20</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Métricas rápidas del cliente -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5 text-center">
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Total Pedidos</span>
+                    <span class="text-base font-bold text-slate-800">9</span>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Unidades Compradas</span>
+                    <span class="text-base font-bold text-slate-800">3,850</span>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Ticket Promedio</span>
+                    <span class="text-base font-bold text-slate-800">£2,523.36</span>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Estado del Cliente</span>
+                    <span class="text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded-full inline-block mt-0.5">Riesgo Alto Churn</span>
+                </div>
+            </div>
+
+            <!-- Diagnóstico de pérdida de actividad -->
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl mb-5">
+                <div class="flex items-start gap-2">
+                    <span class="text-amber-600 font-bold text-base">⚠️</span>
+                    <div>
+                        <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wider">Diagnóstico de Pérdida de Actividad</h4>
+                        <p class="text-xs text-amber-800 mt-0.5 leading-relaxed">Cliente mayorista nacional (UK) con alto poder adquisitivo: £22,710.20 acumulados y ticket promedio de £2,523.36. Inactivo desde hace 73 días (última compra en septiembre de 2010), perdiendo el ciclo comercial de otoño/Navidad. Su patrón indica compras por campañas estacionales que no han sido oportunamente estimuladas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Productos preferidos -->
+            <div class="mb-5 bg-slate-50/60 p-4 rounded-xl border border-slate-200">
+                <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <span>⭐</span> Artículos Clave con Mayor Aporte de Facturación
+                </h4>
+                <div class="space-y-1">
+                    
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                <span class="text-slate-700 font-medium truncate max-w-xs" title="Manual">
+                    📦 Manual
+                </span>
+                <span class="text-slate-500 font-semibold whitespace-nowrap">
+                    2 unids &bull; £13,238.70
+                </span>
+            </div>
+            
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                <span class="text-slate-700 font-medium truncate max-w-xs" title="S/16 VINTAGE BLACK CUTLERY">
+                    📦 S/16 VINTAGE BLACK CUTLERY
+                </span>
+                <span class="text-slate-500 font-semibold whitespace-nowrap">
+                    120 unids &bull; £1,314.00
+                </span>
+            </div>
+            
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                <span class="text-slate-700 font-medium truncate max-w-xs" title="S/16 VINTAGE RED CUTLERY">
+                    📦 S/16 VINTAGE RED CUTLERY
+                </span>
+                <span class="text-slate-500 font-semibold whitespace-nowrap">
+                    120 unids &bull; £1,314.00
+                </span>
+            </div>
+            
+                </div>
+            </div>
+
+            <!-- 3 Acciones Tácticas -->
+            <div>
+                <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+                    Plan Estratégico Prescriptivo (3 Acciones de Ataque y Reactivación)
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-400 transition-all shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h5 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">1</span>
+                        1. Oferta de Reabastecimiento Estacional con Descuento por Volumen
+                    </h5>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold border bg-amber-100 text-amber-800 border-amber-200">
+                        ⏱ Inmediata (3-5 días)
+                    </span>
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-2">
+                    🎯 Canal sugerido: <span class="text-slate-700 font-normal">Reunión Comercial Presencial / Llamada de KAM</span>
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Presentar una propuesta de reposición con precio especial en 'Manual' y lotes afines, aplicando un 10% de descuento directo al alcanzar un pedido mínimo de £3,000.
+                </p>
+                <div class="bg-white rounded-lg p-2.5 border border-slate-200 text-xs text-emerald-800 flex items-start gap-1.5">
+                    <span class="font-bold text-emerald-600">📈 Impacto:</span>
+                    <span>Reincorporar al cliente en la campaña estacional inmediata recuperando más de £5,000 en compras.</span>
+                </div>
+            </div>
+            
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-400 transition-all shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h5 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">2</span>
+                        2. Pre-venta Exclusiva de Novedades y Reserva Garantizada
+                    </h5>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold border bg-blue-100 text-blue-800 border-blue-200">
+                        ⏱ Corto plazo (7 días)
+                    </span>
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-2">
+                    🎯 Canal sugerido: <span class="text-slate-700 font-normal">Catálogo Digital Interactivo con Pre-reserva</span>
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Brindar acceso anticipado de 72 horas al catálogo de nuevas colecciones antes de su lanzamiento al público general, asegurando disponibilidad completa de stock.
+                </p>
+                <div class="bg-white rounded-lg p-2.5 border border-slate-200 text-xs text-emerald-800 flex items-start gap-1.5">
+                    <span class="font-bold text-emerald-600">📈 Impacto:</span>
+                    <span>Aumentar la percepción de exclusividad de marca e impulsar compras anticipadas.</span>
+                </div>
+            </div>
+            
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-400 transition-all shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h5 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">3</span>
+                        3. Flexibilización de Condiciones de Pago y Descuento por Pronto Pago
+                    </h5>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold border bg-blue-100 text-blue-800 border-blue-200">
+                        ⏱ Medio plazo (10-15 días)
+                    </span>
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-2">
+                    🎯 Canal sugerido: <span class="text-slate-700 font-normal">Finanzas Comerciales / Facturación B2B</span>
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Ofrecer ampliación de plazos a 30/60 días fecha factura o un 3% de descuento adicional por pago al contado dentro de los 10 días.
+                </p>
+                <div class="bg-white rounded-lg p-2.5 border border-slate-200 text-xs text-emerald-800 flex items-start gap-1.5">
+                    <span class="font-bold text-emerald-600">📈 Impacto:</span>
+                    <span>Facilitar el flujo de caja del cliente y eliminar barreras financieras para emitir órdenes de gran importe.</span>
+                </div>
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-8 hover:shadow-lg transition-shadow">
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 mb-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                        #5
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-xl font-bold text-slate-900">Cliente VIP #18251</h3>
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                                🌍 United Kingdom
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-0.5">
+                            Cliente desde 2009-12-22 &bull; Última compra: <strong class="text-rose-600">2010-09-20</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="bg-rose-50 border border-rose-200 rounded-xl px-4 py-2 text-right">
+                        <span class="text-xs text-rose-600 uppercase font-bold tracking-wider block">Inactividad</span>
+                        <span class="text-lg font-black text-rose-700">80 días</span>
+                    </div>
+                    <div class="bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-2 text-right">
+                        <span class="text-xs text-indigo-600 uppercase font-bold tracking-wider block">Gasto Total</span>
+                        <span class="text-lg font-black text-indigo-900">£21,964.14</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Métricas rápidas del cliente -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5 text-center">
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Total Pedidos</span>
+                    <span class="text-base font-bold text-slate-800">8</span>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Unidades Compradas</span>
+                    <span class="text-base font-bold text-slate-800">31,815</span>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Ticket Promedio</span>
+                    <span class="text-base font-bold text-slate-800">£2,745.52</span>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-xs text-slate-500 block">Estado del Cliente</span>
+                    <span class="text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded-full inline-block mt-0.5">Riesgo Alto Churn</span>
+                </div>
+            </div>
+
+            <!-- Diagnóstico de pérdida de actividad -->
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl mb-5">
+                <div class="flex items-start gap-2">
+                    <span class="text-amber-600 font-bold text-base">⚠️</span>
+                    <div>
+                        <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wider">Diagnóstico de Pérdida de Actividad</h4>
+                        <p class="text-xs text-amber-800 mt-0.5 leading-relaxed">Cliente mayorista nacional (UK) con alto poder adquisitivo: £21,964.14 acumulados y ticket promedio de £2,745.52. Inactivo desde hace 80 días (última compra en septiembre de 2010), perdiendo el ciclo comercial de otoño/Navidad. Su patrón indica compras por campañas estacionales que no han sido oportunamente estimuladas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Productos preferidos -->
+            <div class="mb-5 bg-slate-50/60 p-4 rounded-xl border border-slate-200">
+                <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <span>⭐</span> Artículos Clave con Mayor Aporte de Facturación
+                </h4>
+                <div class="space-y-1">
+                    
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                <span class="text-slate-700 font-medium truncate max-w-xs" title="SKULLS PARTY BAG + STICKER SET">
+                    📦 SKULLS PARTY BAG + STICKER SET
+                </span>
+                <span class="text-slate-500 font-semibold whitespace-nowrap">
+                    576 unids &bull; £835.20
+                </span>
+            </div>
+            
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                <span class="text-slate-700 font-medium truncate max-w-xs" title="SKULL AND CROSSBONES  GARLAND ">
+                    📦 SKULL AND CROSSBONES  GARLAND 
+                </span>
+                <span class="text-slate-500 font-semibold whitespace-nowrap">
+                    576 unids &bull; £835.20
+                </span>
+            </div>
+            
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                <span class="text-slate-700 font-medium truncate max-w-xs" title="PACK OF 72 SKULL CAKE CASES">
+                    📦 PACK OF 72 SKULL CAKE CASES
+                </span>
+                <span class="text-slate-500 font-semibold whitespace-nowrap">
+                    1,800 unids &bull; £756.00
+                </span>
+            </div>
+            
+                </div>
+            </div>
+
+            <!-- 3 Acciones Tácticas -->
+            <div>
+                <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+                    Plan Estratégico Prescriptivo (3 Acciones de Ataque y Reactivación)
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-400 transition-all shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h5 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">1</span>
+                        1. Oferta de Reabastecimiento Estacional con Descuento por Volumen
+                    </h5>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold border bg-amber-100 text-amber-800 border-amber-200">
+                        ⏱ Inmediata (3-5 días)
+                    </span>
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-2">
+                    🎯 Canal sugerido: <span class="text-slate-700 font-normal">Reunión Comercial Presencial / Llamada de KAM</span>
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Presentar una propuesta de reposición con precio especial en 'SKULLS PARTY BAG + STICKER SET' y lotes afines, aplicando un 10% de descuento directo al alcanzar un pedido mínimo de £3,000.
+                </p>
+                <div class="bg-white rounded-lg p-2.5 border border-slate-200 text-xs text-emerald-800 flex items-start gap-1.5">
+                    <span class="font-bold text-emerald-600">📈 Impacto:</span>
+                    <span>Reincorporar al cliente en la campaña estacional inmediata recuperando más de £5,000 en compras.</span>
+                </div>
+            </div>
+            
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-400 transition-all shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h5 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">2</span>
+                        2. Pre-venta Exclusiva de Novedades y Reserva Garantizada
+                    </h5>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold border bg-blue-100 text-blue-800 border-blue-200">
+                        ⏱ Corto plazo (7 días)
+                    </span>
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-2">
+                    🎯 Canal sugerido: <span class="text-slate-700 font-normal">Catálogo Digital Interactivo con Pre-reserva</span>
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Brindar acceso anticipado de 72 horas al catálogo de nuevas colecciones antes de su lanzamiento al público general, asegurando disponibilidad completa de stock.
+                </p>
+                <div class="bg-white rounded-lg p-2.5 border border-slate-200 text-xs text-emerald-800 flex items-start gap-1.5">
+                    <span class="font-bold text-emerald-600">📈 Impacto:</span>
+                    <span>Aumentar la percepción de exclusividad de marca e impulsar compras anticipadas.</span>
+                </div>
+            </div>
+            
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-400 transition-all shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h5 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">3</span>
+                        3. Flexibilización de Condiciones de Pago y Descuento por Pronto Pago
+                    </h5>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold border bg-blue-100 text-blue-800 border-blue-200">
+                        ⏱ Medio plazo (10-15 días)
+                    </span>
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-2">
+                    🎯 Canal sugerido: <span class="text-slate-700 font-normal">Finanzas Comerciales / Facturación B2B</span>
+                </p>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Ofrecer ampliación de plazos a 30/60 días fecha factura o un 3% de descuento adicional por pago al contado dentro de los 10 días.
+                </p>
+                <div class="bg-white rounded-lg p-2.5 border border-slate-200 text-xs text-emerald-800 flex items-start gap-1.5">
+                    <span class="font-bold text-emerald-600">📈 Impacto:</span>
+                    <span>Facilitar el flujo de caja del cliente y eliminar barreras financieras para emitir órdenes de gran importe.</span>
+                </div>
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+        </div>
+
+        <!-- Tabla Resumen Comparativa -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+                <div>
+                    <h3 class="text-base font-bold text-slate-800">Matriz Ejecutiva de Priorización de Contacto</h3>
+                    <p class="text-xs text-slate-500">Resumen ordenado por aportación financiera en riesgo</p>
+                </div>
+                <button onclick="window.print()" class="px-4 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 transition-colors flex items-center gap-2">
+                    🖨️ Exportar / Imprimir Reporte
+                </button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-slate-700">
+                    <thead class="bg-slate-50 text-slate-600 font-bold uppercase tracking-wider border-b border-slate-200">
+                        <tr>
+                            <th class="py-3 px-4">Prioridad</th>
+                            <th class="py-3 px-4">ID Cliente</th>
+                            <th class="py-3 px-4">País</th>
+                            <th class="py-3 px-4 text-right">Gasto Total (£)</th>
+                            <th class="py-3 px-4 text-center">Pedidos</th>
+                            <th class="py-3 px-4 text-right">Ticket Promedio (£)</th>
+                            <th class="py-3 px-4 text-center">Días Inactivo</th>
+                            <th class="py-3 px-4">Acción Inmediata Clave</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        
+                        <tr class="hover:bg-slate-50/80 transition-colors">
+                            <td class="py-3.5 px-4 font-bold text-indigo-600">#1</td>
+                            <td class="py-3.5 px-4 font-bold text-slate-900">Cliente 13902</td>
+                            <td class="py-3.5 px-4">Denmark</td>
+                            <td class="py-3.5 px-4 text-right font-black text-slate-900">£34,095.26</td>
+                            <td class="py-3.5 px-4 text-center">5</td>
+                            <td class="py-3.5 px-4 text-right font-semibold">£6,819.05</td>
+                            <td class="py-3.5 px-4 text-center">
+                                <span class="px-2.5 py-1 rounded-full font-bold bg-rose-100 text-rose-800">267 d</span>
+                            </td>
+                            <td class="py-3.5 px-4 font-medium text-slate-800">1. Auditoría Logística y Tarifa Plana de Envíos B2B</td>
+                        </tr>
+                        
+                        <tr class="hover:bg-slate-50/80 transition-colors">
+                            <td class="py-3.5 px-4 font-bold text-indigo-600">#2</td>
+                            <td class="py-3.5 px-4 font-bold text-slate-900">Cliente 17940</td>
+                            <td class="py-3.5 px-4">United Kingdom</td>
+                            <td class="py-3.5 px-4 text-right font-black text-slate-900">£26,286.75</td>
+                            <td class="py-3.5 px-4 text-center">6</td>
+                            <td class="py-3.5 px-4 text-right font-semibold">£4,381.13</td>
+                            <td class="py-3.5 px-4 text-center">
+                                <span class="px-2.5 py-1 rounded-full font-bold bg-rose-100 text-rose-800">80 d</span>
+                            </td>
+                            <td class="py-3.5 px-4 font-medium text-slate-800">1. Oferta de Reabastecimiento Estacional con Descuento por Volumen</td>
+                        </tr>
+                        
+                        <tr class="hover:bg-slate-50/80 transition-colors">
+                            <td class="py-3.5 px-4 font-bold text-indigo-600">#3</td>
+                            <td class="py-3.5 px-4 font-bold text-slate-900">Cliente 12482</td>
+                            <td class="py-3.5 px-4">Sweden</td>
+                            <td class="py-3.5 px-4 text-right font-black text-slate-900">£23,691.40</td>
+                            <td class="py-3.5 px-4 text-center">29</td>
+                            <td class="py-3.5 px-4 text-right font-semibold">£816.94</td>
+                            <td class="py-3.5 px-4 text-center">
+                                <span class="px-2.5 py-1 rounded-full font-bold bg-rose-100 text-rose-800">211 d</span>
+                            </td>
+                            <td class="py-3.5 px-4 font-medium text-slate-800">1. Auditoría Logística y Tarifa Plana de Envíos B2B</td>
+                        </tr>
+                        
+                        <tr class="hover:bg-slate-50/80 transition-colors">
+                            <td class="py-3.5 px-4 font-bold text-indigo-600">#4</td>
+                            <td class="py-3.5 px-4 font-bold text-slate-900">Cliente 14063</td>
+                            <td class="py-3.5 px-4">United Kingdom</td>
+                            <td class="py-3.5 px-4 text-right font-black text-slate-900">£22,710.20</td>
+                            <td class="py-3.5 px-4 text-center">9</td>
+                            <td class="py-3.5 px-4 text-right font-semibold">£2,523.36</td>
+                            <td class="py-3.5 px-4 text-center">
+                                <span class="px-2.5 py-1 rounded-full font-bold bg-rose-100 text-rose-800">73 d</span>
+                            </td>
+                            <td class="py-3.5 px-4 font-medium text-slate-800">1. Oferta de Reabastecimiento Estacional con Descuento por Volumen</td>
+                        </tr>
+                        
+                        <tr class="hover:bg-slate-50/80 transition-colors">
+                            <td class="py-3.5 px-4 font-bold text-indigo-600">#5</td>
+                            <td class="py-3.5 px-4 font-bold text-slate-900">Cliente 18251</td>
+                            <td class="py-3.5 px-4">United Kingdom</td>
+                            <td class="py-3.5 px-4 text-right font-black text-slate-900">£21,964.14</td>
+                            <td class="py-3.5 px-4 text-center">8</td>
+                            <td class="py-3.5 px-4 text-right font-semibold">£2,745.52</td>
+                            <td class="py-3.5 px-4 text-center">
+                                <span class="px-2.5 py-1 rounded-full font-bold bg-rose-100 text-rose-800">80 d</span>
+                            </td>
+                            <td class="py-3.5 px-4 font-medium text-slate-800">1. Oferta de Reabastecimiento Estacional con Descuento por Volumen</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
+        <p>Generado automáticamente por el <strong>Agente de BI de Retail</strong> &bull; Basado en PostgreSQL (Supabase) & LLM Analytics</p>
+    </footer>
+
+    <!-- Chart.js Scripts -->
+    <script>
+        // Gráfico 1: Segmentos
+        const ctxSegment = document.getElementById('segmentChart').getContext('2d');
+        new Chart(ctxSegment, {
+            type: 'doughnut',
+            data: {
+                labels: ["Inactivo / Churn (>60 d)", "Activo (0-30 d)", "En Riesgo (31-60 d)"],
+                datasets: [{
+                    data: [1914, 1616, 787],
+                    backgroundColor: ['#10b981', '#f59e0b', '#f43f5e'],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { boxWidth: 12, font: { size: 11 } }
+                    }
+                }
+            }
+        });
+
+        // Gráfico 2: Top 5 VIPs Gasto vs Inactividad
+        const ctxVip = document.getElementById('vipChart').getContext('2d');
+        new Chart(ctxVip, {
+            type: 'bar',
+            data: {
+                labels: ["ID 13902 (Denmark)", "ID 17940 (United Kingdom)", "ID 12482 (Sweden)", "ID 14063 (United Kingdom)", "ID 18251 (United Kingdom)"],
+                datasets: [
+                    {
+                        label: 'Gasto Total (£)',
+                        data: [34095.26, 26286.75, 23691.4, 22710.2, 21964.14],
+                        backgroundColor: '#6366f1',
+                        borderRadius: 8,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Días Inactivo',
+                        data: [267, 80, 211, 73, 80],
+                        type: 'line',
+                        borderColor: '#e11d48',
+                        backgroundColor: '#e11d48',
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        yAxisID: 'y1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: 'Gasto (£)', font: { size: 10 } }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        grid: { drawOnChartArea: false },
+                        title: { display: true, text: 'Días de Inactividad', font: { size: 10 } }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { boxWidth: 12, font: { size: 11 } }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
